@@ -75,9 +75,22 @@ const HomePage = () => {
   const realmName = authState?.idToken?.claims?.realmName;
   const isAdminUser = authState?.idToken?.claims?.realmName === true;
   const isAdmin = (realmName === 'NAPA_REALM' || realmName === 'EAST_REALM' || realmName === 'WEST_REALM') && realmName;
-  const adminUrl = realmName === 'brokerages' 
-    ? 'https://sherwindemo.oktapreview.com/partner-portal/guop53mic7JNWXMmO1d7'
-    : 'https://sherwindemo.oktapreview.com/partner-portal/guop53y5n89mtrusM1d7';
+  
+  // Map each realm to its specific admin URL
+  const getAdminUrl = (realm: any) => {
+    switch (realm) {
+      case 'NAPA_REALM':
+        return 'https://sherwindemo.oktapreview.com/partner-portal/guop53oy4bTNZpcNO1d7';
+      case 'EAST_REALM':
+        return 'https://sherwindemo.oktapreview.com/partner-portal/guop53mic7JNWXMmO1d7';
+      case 'WEST_REALM':
+        return 'https://sherwindemo.oktapreview.com/partner-portal/guop53y5n89mtrusM1d7'; // You can update this URL as needed
+      default:
+        return 'https://sherwindemo.oktapreview.com/partner-portal/guop53y5n89mtrusM1d7'; // Default fallback
+    }
+  };
+  
+  const adminUrl = getAdminUrl(realmName);
 
   return (
     <div style={{ 
